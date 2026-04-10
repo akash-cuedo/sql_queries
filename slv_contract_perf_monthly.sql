@@ -12,7 +12,10 @@ WITH MonthlyLoanPerformance AS (
     lm.isNPA AS is_npa,
     lm.npaStartDate AS npa_start_date,
     lm.assetClassification AS asset_classification,
-    CAST(lm.isRestructured AS BOOLEAN) AS is_restructured,
+    CASE 
+    WHEN lm.isRestructured IN ('1') THEN TRUE
+    WHEN lm.isRestructured IN ('0','NULL') THEN FALSE
+    END AS is_restructured, -- 1 = ture but null = false for now have to ask 
 
 --     td. AS dpd_bucket,   --- need's comfirmation
 --     --need clarification on dpd days for staging
@@ -27,8 +30,8 @@ WITH MonthlyLoanPerformance AS (
 --     lm.probability_of_default
 --     lm.loss_given_default
 -- confirmation on which column to use
---     lm.   AS  loan_status,
-
+--     lm. AS  loan_status, 
+--
 
     lm.provisionsValue AS provisions_value,
     lm.riskWeight AS risk_weight,
@@ -38,7 +41,6 @@ WITH MonthlyLoanPerformance AS (
     lm.balanceTenor AS balance_tenur,
     lm.createdOn   AS  record_created_at,
     lm.lastModifiedOn AS record_modified_at,
-    lm. AS silver_loaded_at,
     CURRENT_TIMESTAMP AS silver_loaded_at,
     TO_CHAR(GETDATE(),'YYYYMMDD_HH24MISS') AS silver_batch_id
   FROM
@@ -56,21 +58,21 @@ SELECT
   due_principal,
   previous_due,
   max_dpd,
-  dpd_bucket,
+--   dpd_bucket,
   is_npa,
   npa_start_date,
   asset_classification,
   is_restructured,
-  ecl_stage,
-  probability_of_default,
-  loss_given_default,
+--   ecl_stage,
+--   probability_of_default,
+--   loss_given_default,
   provisions_value,
   risk_weight,
   source_funding_name,
   liability_code,
   roi,
   balance_tenur,
-  loan_status,
+--   loan_status,
   record_created_at,
   record_modified_at,
   silver_loaded_at,
