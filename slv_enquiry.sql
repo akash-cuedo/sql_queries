@@ -33,7 +33,7 @@ SELECT
     CURRENT_TIMESTAMP AS silver_loaded_at,
     TO_CHAR(GETDATE(),'YYYYMMDD_HH24MISS') AS silver_batch_id
 FROM dmihfclos.tblLead l
-JOIN dmihfclos.tblTypeDetail dt1 ON l.sourcingChannelPartnerTypeDetailID = dt1.typeDetailID
-JOIN dmihfclos.tblTypeDetail dt2 ON l.campanianTypeDetailID = dt2.typeDetailID
-JOIN dmihfclos.tblTypeDetail dt3 ON l.currentStatusTypeDetailID = dt3.typeDetailID
-JOIN LeadFollowUpAggregations lfa ON l.leadID = lfa.leadId;
+Left JOIN dmihfclos.tblTypeDetail dt1 ON l.sourcingChannelPartnerTypeDetailID = dt1.typeDetailID
+Left JOIN dmihfclos.tblTypeDetail dt2 ON l.campanianTypeDetailID = dt2.typeDetailID
+Left JOIN dmihfclos.tblTypeDetail dt3 ON l.currentStatusTypeDetailID = dt3.typeDetailID
+Left JOIN LeadFollowUpAggregations lfa ON l.leadID = lfa.leadId;
