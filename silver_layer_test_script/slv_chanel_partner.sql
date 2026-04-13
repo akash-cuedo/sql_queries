@@ -23,6 +23,7 @@ AggregatedCounts AS (
     FROM dmihfclos.tblEntityCoveredBranch
     GROUP BY entityID
 )
+    
 SELECT
     cd.dsa_id,
     cd.entity_id,
